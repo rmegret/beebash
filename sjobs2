@@ -1,0 +1,33 @@
+#!/bin/bash
+
+time="${1-6 hours}"
+user="${2-$(whoami)}"
+
+d="$(date -d "$time" '+%Y-%m-%dT%H:%M:%S')"
+
+echo "sjobs: Jobs for user $user for period '$time'"
+echo "starttime after $d"
+
+J=$(sacct -u rmegret --starttime "$d" -n -o jobid%15,jobidraw%15\
+    | grep -v '[0-9][.]batch' | awk '{split($1,arr,"_"); if (length(arr)==1) arr[2]="x"; print arr[1]" "arr[2]" "$2" "$1}' | sort -k 1,2n | sed 's/[[:space:]]*$//g') 
+
+echo "$J"
+
+jd="$(echo "$J" | awk 'BEGIN{ORS=",";} {print $4}' | sed 's/,$/\n/')"
+echo jobs="$jd"
+
+#echo jobs: "$J"
+
+template='%10s  %8s  %-32s %10s %20s %9s %9s\n'
+printf "$template" JOBID JOBIDRAW JOBNAME STATE START ELAPSED TIMELIMIT
+
+sacct -j "$jd" -p -n --format=jobid%10,jobidraw,jobname,state,start,elapsed,timelimit  \
+   | awk -F '|' 'BEGIN{ lastname="";} \
+      { if ( $1 ~ /[0-9][.]batch/ ) {  } \
+       if (lastname!=$3) print "";\
+       split($4,arr," "); status=arr[1]; \
+       printf("'"${template}"'", $1,$2,$3,status,$5,$6,$7,$8);\
+       lastname=$3;
+     }' ; 
+   
+
