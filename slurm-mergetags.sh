@@ -9,7 +9,7 @@
 
 display_usage() { 
     cat <<EOF
-do-tagjsonmerge.sh video family f0 f1
+slurm-mergetags.sh video family f0 f1
 EOF
 }
 error() {
@@ -24,9 +24,9 @@ fi
 video="$1"
 videoname="${1##*/}"
 vn=${videoname%.*}
-family="$2"
-f0="$3"
-f1="$4"
+family="$2:-tag25h5inv"  # Default=tag25h5inv
+f0="$3:-0"      # Default=0"
+f1="$4:-72100"  # Default=72100"
 
 dir=/work/rmegret/rmegret/tags/${videoname%.*}
 #mkdir -p $dir
@@ -40,7 +40,7 @@ wp=/work/rmegret/rmegret/utils/swatbotics_apriltag/python
 source /work/rmegret/rmegret/anaconda3/bin/activate
 export PATH=/work/rmegret/rmegret/anaconda3/bin:$PATH
 
-echo "do-tagjsonmerge.sh $@"
+echo "slurm-mergetags.sh $@"
 set -x
 
 "$wp"/tagjsonmerge.py -tags "$dir"/tagjson/tags_{:05d}.json -f0 $f0 -f1 $f1 -o "$out"
