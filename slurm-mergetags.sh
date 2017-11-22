@@ -41,7 +41,7 @@ source /work/rmegret/rmegret/anaconda3/bin/activate
 export PATH=/work/rmegret/rmegret/anaconda3/bin:$PATH
 
 echo "slurm-mergetags.sh $@"
-set -x
+#set -x
 
 "$wp"/tagjsonmerge.py -tags "$dir"/tagjson/tags_{:05d}.json -f0 $f0 -f1 $f1 -o "$out"
 #echo "Ctrl-C to stop monitoring"

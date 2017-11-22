@@ -1,7 +1,7 @@
 #!/bin/bash
 #SBATCH --mem-per-cpu=8192
-#SBATCH --time=4:00:00
-#SBATCH --job-name=apriltag
+#SBATCH --time=8:00:00
+#SBATCH --job-name=tags
 #SBATCH --mail-type=ALL
 #SBATCH --workdir=/work/rmegret/rmegret/tags
 #SBATCH --error=apriltag-%j.err.txt
@@ -53,7 +53,7 @@ echo "  step=$step"
 echo "  SLURM job id=$id, count=$SLURM_ARRAY_TASK_COUNT"
 echo "  ff0=$ff0,ff1=$ff1"
 
-set -x
+#set -x
 
 mkdir -p "$dir"
 cd "$dir"
@@ -61,7 +61,7 @@ cd "$dir"
 source /work/rmegret/rmegret/anaconda3/bin/activate
 
 #"$PYTHON" "$script" -V "$VIDEO" -I -f tagbeetag -f0 $f0 -f1 $f1 -1 -D=0
-"$PYTHON" "$script" -V "$video" -F $family -f0 $ff0 -f1 $ff1 -1 -D=0 -fps $fps -t 6
+"$PYTHON" "$script" -V "$video" -F $family -f0 $ff0 -f1 $ff1 -1 -D=0 -fps $fps # -t 6
 
 /bin/date +"TIME END: %Y-%m-%d %H:%M:%S"
 

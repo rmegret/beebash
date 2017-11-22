@@ -53,7 +53,7 @@ if [ ! -z "$dryrun" ]; then
     exit 0
 fi 
 
-set -x
+#set -x
 
 source /work/rmegret/rmegret/anaconda3/bin/activate
 

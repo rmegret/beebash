@@ -35,7 +35,7 @@ dir=/work/rmegret/rmegret/tags/${vn}
 
 out=/work/rmegret/rmegret/tags/Tags/
 
-set -x
+#set -x
 
 wp=/work/rmegret/rmegret/utils/swatbotics_apriltag/python
 
