@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
 from subprocess import call
-import os
+import os,sys
 
 def main():
 
@@ -40,7 +40,7 @@ def main():
                                                 
     parser.add_argument('-o', dest='dirbaseout', default='/work/rmegret/rmegret/tags', 
                         help='Basedir to output tags '+ show_default)
-    parser.add_argument('-t','-time', dest='time', default='4:30:00', help='Override TIMELIMIT parameter, format H:MM:SS'+ show_default)
+    parser.add_argument('-t','-time', dest='time', default='8:00:00', help='Override TIMELIMIT parameter, format H:MM:SS'+ show_default)
 
 
     options = parser.parse_args()
@@ -101,7 +101,8 @@ dryrun={dryrun}
                     call(params)
     else:
         params=["sbatch", "-J", "tags-{}-{}-{}".format(videoname,options.f0,options.f1),
-            "/work/rmegret/rmegret/utils/bash/slurm-apriltag.sh", dirout, "--time="+options.time,
+            "--time="+options.time,
+            "/work/rmegret/rmegret/utils/bash/slurm-apriltag.sh", dirout, 
             options.video, options.family, str(options.f0), str(options.f1), 
             str(options.fps)]
         print(" ".join(params))
@@ -111,6 +112,8 @@ dryrun={dryrun}
 
 if __name__ == '__main__':
 
+    print("do-tags.py: BEGIN", file=sys.stderr)
     main()
+    print("do-tags.py: END", file=sys.stderr)
 
 

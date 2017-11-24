@@ -46,3 +46,4 @@ python3 /work/rmegret/rmegret/utils/tag_cleaner2/cleaner.py \
    -i /work/rmegret/rmegret/tags/$vn/tags-$vn-0-72100.json \
    -o /work/rmegret/rmegret/tags/Tags/Tags-$vn.json \
    -ids [13,14,15,16] -hm 2 -bx [175,30,2305,1240];
+
