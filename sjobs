@@ -1,12 +1,16 @@
 #!/bin/bash
 
-time="${1-6 hours}"
+time="${1-6 hours ago}"
 user="${2-$(whoami)}"
 
 d="$(date -d "$time" '+%Y-%m-%dT%H:%M:%S')"
 
 echo "sjobs: Jobs for user $user for period '$time'"
 echo "starttime after $d"
+
+sacct -u rmegret --starttime "$d" -n -o jobid%18,jobidraw%12,jobname%36,state%20,start,elapsed,timelimit | grep -v '[0-9][.]batch' | awk 'BEGIN{a=""} {vid=$3; sub("tags-","",vid); sub("-0-72100","",vid); if ($3!=a) print vid; a=$3; print}'
+
+exit 0
 
 J=$(sacct -u rmegret --starttime "$d" -n -o jobid%20,jobidraw%20,jobname%30 \
     | grep -v '[0-9][.]batch' | awk '{split($1,arr,"_"); gsub(/\[/,"",arr[1]); gsub(/\]/,"",arr[1]); printf("%s,%s,%s,%s,%s\n",$1,$2,$3,arr[1],arr[2]);} '| sort -t , -k 3,3 -k 4,4n -k 5,5n)

@@ -34,6 +34,16 @@ def left_justified(df):
         formatters[li] = functools.partial(str.format, form)
     return df.to_string(formatters=formatters)
 
+def check_tagraw(dir):
+    count=0
+    for i in range(0,72100,5000):
+        j=i+4999
+        if (j>71980): j=71980
+        name = '{dir}/tags_{i:05}.json'.format(dir=dir,i=j)
+        if os.path.isfile(name):
+            count+=1
+    return count
+
 def main(options):
 
     dates=options.dates.split(',')
@@ -55,6 +65,7 @@ def main(options):
             mpgfile='/work/rmegret/rmegret/videos/Gurabo/C02_'+name+'.mp4'
             scale4file=mpgfile+'.scale4.mp4'
 
+            tagdir='/work/rmegret/rmegret/tags/C02_'+name+'/tagjson'
             tagrawfile='/work/rmegret/rmegret/tags/C02_'+name+'/tagjson/tags_69999.json'
             tagmergefile='/work/rmegret/rmegret/tags/C02_'+name+'/tags-C02_'+name+'-0-72100.json'
             tagcleanfile='/work/rmegret/rmegret/tags/Tags/Tags-C02_'+name+'.json'
@@ -67,7 +78,9 @@ def main(options):
             df.set_value(vname, 'avi', ok(len(avis)>0,'avi:ok  ','avi:--  '))
             df.set_value(vname, 'mp4', ok(os.path.isfile(mpgfile), 'mp4:ok  ','mp4:--  '))
             df.set_value(vname, 'scale4', ok(os.path.isfile(scale4file), 'sc4:ok  ','sc4:--  '))
-            df.set_value(vname, 'tagraw', ok(os.path.isfile(tagrawfile),  'raw:ok  ','raw:--  '))
+            tagcount=check_tagraw(tagdir)
+            df.set_value(vname, 'tagraw', 
+                  'raw:{count:02}/15{mark} '.format(count=tagcount,mark='*' if tagcount<15 else ' '))
             df.set_value(vname, 'tagmerge', ok(os.path.isfile(tagmergefile),  'mrg:ok  ','mrg:--  '))
             df.set_value(vname, 'tagclean', ok(os.path.isfile(tagcleanfile),  'cln:ok  ','cln:--  '))
 
@@ -79,10 +92,14 @@ def main(options):
             
             if (os.path.isfile(tagcleanfile)):
                 df.at[vname,'tagclean'] = 'cln:'+'{:_>8}'.format(file_size(tagcleanfile))
-
-    df.to_csv(out, index_label='video')
-    with open(out+'.txt','w') as file:
-        file.write(left_justified(df))
+    if (out is not None):
+        df.to_csv(out, index_label='video')
+        with open(out+'.txt','w') as file:
+            file.write(left_justified(df))
+            file.write('\n')
+    else:
+        sys.stdout.write(left_justified(df))
+        sys.stdout.write('\n')
 
 if __name__ == '__main__':
 
@@ -96,12 +113,12 @@ if __name__ == '__main__':
         
     show_default = ' (default %(default)s)'
 
-    parser.add_argument('output', help='output file', default='outlist.csv')
+    parser.add_argument('-o', dest='output', help='output file'+show_default, default=None)
 
     parser.add_argument('-D', '--dates', dest='dates',  default='',
-                        help='Dates to look for '+show_default)
+                        help='Dates to check '+show_default)
     parser.add_argument('-H', '--hours', dest='hours', default='07,08,09,10,11,12,13,14,15,16,17,18',
-                        help='Hours to look for '+show_default)
+                        help='Hours to check '+show_default)
                         
     options = parser.parse_args()
 
