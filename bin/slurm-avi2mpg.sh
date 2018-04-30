@@ -7,24 +7,6 @@
 #SBATCH --error=avi2mpg-%j.err.txt
 #SBATCH --output=avi2mpg-%j.out.txt
 
-display_usage() { 
-    cat >&2 <<EOF
-slurm-avi2mp4.sh inputvideo [-o dir_out] [-dryrun]
-  Where inputvideo is fullpath of input filename, in the form <dir_in>/<filename>.avi
-  Input video should be with pattern II_cc_L_YYMMDDhhmmss.avi
-  output MP4 will be on the form <dir_out>/Ccc_YYMMDDhhmmss.mp4
-  With default paths:
-    dir_in=/work/rmegret/sfeliciano/Gurabo
-    dir_out=/work/rmegret/rmegret/videos/2017-06-Gurabo
-EOF
-}
-error() {
-    echo "error: $1" >&2;
-    echo -n "usage: "; display_usage;
-    exit 1;
-}
-if [ $# -lt 1 ]; then error "Not enough arguments. Got $#, need 1"; fi
-
 args=()
 while [ "$#" -gt 0 ]; do
   case "$1" in
