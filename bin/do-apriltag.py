@@ -22,7 +22,7 @@ videofile=video.split('/')[-1]
 videoname=videofile.split(".")[0]
 videodate=videoname.split("_")[-1]
 
-cmd = f"sbatch -J {quote(args.family)}-{args.f0}-{args.f1}-{quote(videofile)} {BEE_PATH}/bin/slurm-apriltag.sh {quote(args.output)}/data/rawtags/{quote(videoname)}/{quote(args.family)} {quote(args.video)} {quote(args.family)} {args.f0} {args.f1} {args.fps}"
+cmd = f"sbatch -J {quote(args.family)}-{args.f0}-{args.f1}-{quote(videofile)} {BEE_PATH}/bin/slurm-apriltag.sh {quote(args.output)}/data/rawtags/{quote(videoname)} {quote(args.video)} {quote(args.family)} {args.f0} {args.f1} {args.fps}"
 
 if args.dryrun:
 	print(cmd)
