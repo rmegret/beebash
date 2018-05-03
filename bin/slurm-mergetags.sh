@@ -15,7 +15,7 @@ f1=$4
 
 #mkdir -p $dir
 
-out="$dir/data/mergedtags/tags-${vn}-${f0}-${f1}.json"
+out="$dir/mergedtags/tags-${vn}-${f0}-${f1}.json"
 
 set +x
 
@@ -27,6 +27,6 @@ wp=/work/rmegret/rmegret/utils/swatbotics_apriltag/python
 echo "slurm-mergetags.sh $@"
 #set -x
 
-"$wp"/tagjsonmerge.py -tags "$dir"/data/rawtags/"$vn"/tagjson/tags_{:05d}.json -f0 $f0 -f1 $f1 -o "$out"
+"$wp"/tagjsonmerge.py -tags "$dir"/rawtags/"$vn"/tagjson/tags_{:05d}.json -f0 $f0 -f1 $f1 -o "$out"
 #echo "Ctrl-C to stop monitoring"
 #tail -f slurm_beetag_errors.txt slurm_beetag_output.txt
