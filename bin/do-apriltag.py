@@ -29,6 +29,4 @@ if args.dryrun:
 	print("Dryrun. Aborting...")
 	quit()
 
-# os.system(cmd)
-print(cmd)
-
+os.system(cmd)
