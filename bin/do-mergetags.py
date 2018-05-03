@@ -3,10 +3,12 @@ from configargparse import ArgParser
 import os
 from shlex import quote
 
-p = ArgParser(default_config_files=['config/mergetags.conf'])
+BEE_PATH = quote(os.environ['BEE_PATH'])
+
+p = ArgParser(default_config_files=[BEE_PATH+'config/mergetags.conf'])
 
 p.add('-n', '--dryrun', help='perform a trial run with no changes made', action='store_true')
-p.add('-o', '--output', help='path to output directory', default="/work/rmegret/rmegret/tags")
+p.add('-o', '--output', help='path to output directory', env_var='BEE_PATH')
 p.add('video', help='video to convert')
 p.add('--f0', help='frame start', type=int, default=0)
 p.add('--f1', help='frame end', type=int, default=72100)
@@ -17,12 +19,11 @@ video=os.path.realpath(args.video)
 videofile=video.split('/')[-1]
 videoname=videofile.split(".")[0]
 
-cmd = f"sbatch -J mergetags-{quote(videofile)} bin/slurm-mergetags.sh {quote(videofile)} {quote(args.output)+videoname} {args.family} {args.f0} {args.f1}"
+cmd = f"sbatch -J mergetags-{quote(videofile)} {BEE_PATH}/bin/slurm-mergetags.sh {quote(videofile)} {quote(args.output)} {args.f0} {args.f1}"
 
 if args.dryrun:
 	print(cmd)
 	print("Dryrun. Aborting...")
 	quit()
 
-# os.system(cmd)
-print(cmd)
+os.system(cmd)
