@@ -19,7 +19,7 @@ video=os.path.realpath(args.video)
 videofile=video.split('/')[-1]
 videoname=videofile.split(".")[0]
 
-cmd = f"sbatch -J mergetags-{quote(videofile)} {BEE_PATH}/bin/slurm-mergetags.sh {quote(videofile)} {quote(args.output)} {args.f0} {args.f1}"
+cmd = f"sbatch -J mergetags-{quote(videofile)} {BEE_PATH}/bin/slurm-mergetags.sh {quote(videoname)} {quote(args.output)} {args.f0} {args.f1}"
 
 if args.dryrun:
 	print(cmd)
