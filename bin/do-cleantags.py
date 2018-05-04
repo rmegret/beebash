@@ -13,6 +13,9 @@ p.add('video', help='video to convert')
 p.add('--family', help='video family', default="tag25h5inv")
 p.add('--f0', help='frame start', type=int, default=0)
 p.add('--f1', help='frame end', type=int, default=72100)
+p.add('--ids', help='List of ids to avoid, eg. "[1602,1603,1604]"', type=string, default='[13,14,15,16]')
+p.add('--hm', help='Hamming distance', type=int, default=2)
+p.add('--bx', help='Excluding box, [left,top,right,bottom]', type=string, default="[175,30,2305,1240]")
 
 args = p.parse_args()
 
@@ -20,7 +23,7 @@ video=os.path.realpath(args.video)
 videofile=video.split('/')[-1]
 videoname=videofile.split(".")[0]
 
-cmd = f"sbatch -J cleantags-{quote(videofile)} {BEE_PATH}/bin/slurm-cleantags.sh {quote(videoname)} {quote(args.output)}/data"
+cmd = f"sbatch -J cleantags-{quote(videofile)} {BEE_PATH}/bin/slurm-cleantags.sh {quote(videoname)} {quote(args.output)}/data {quote(args.ids)} {quote(args.hm)} {quote(args.bx)}"
 
 if args.dryrun:
 	print(cmd)
