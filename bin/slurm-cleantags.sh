@@ -9,6 +9,10 @@
 
 vn="$1"
 dir="$2"
+ids="$3"
+hm=$4
+bx="$5"
+
 #mkdir -p $dir
 
 shift $#
@@ -23,4 +27,4 @@ export PATH=/work/rmegret/rmegret/anaconda3/bin:$PATH
 python3 /work/rmegret/rmegret/utils/tag_cleaner2/cleaner.py \
    -i $dir/mergedtags/${vn}/tags-$vn-0-72100.json \
    -o $dir/cleantags/Tags-$vn.json \
-   -ids [13,14,15,16] -hm 2 -bx [175,30,2305,1240];
+   -ids $id -hm $hm -bx $bx;
