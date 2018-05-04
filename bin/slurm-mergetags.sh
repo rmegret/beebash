@@ -21,8 +21,8 @@ set +x
 
 wp=/work/rmegret/rmegret/utils/swatbotics_apriltag/python
 
-# source /work/rmegret/rmegret/anaconda3/bin/activate
-# export PATH=/work/rmegret/rmegret/anaconda3/bin:$PATH
+source /work/rmegret/rmegret/anaconda3/bin/activate
+export PATH=/work/rmegret/rmegret/anaconda3/bin:$PATH
 
 echo "slurm-mergetags.sh $@"
 #set -x
