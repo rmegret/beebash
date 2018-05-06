@@ -3,7 +3,6 @@
 #SBATCH --time=4:00:00
 #SBATCH --job-name=avi2mpg
 #SBATCH --mail-type=ALL
-#SBATCH --workdir=/work/rmegret/rmegret/videos
 #SBATCH --error=avi2mpg-%j.err.txt
 #SBATCH --output=avi2mpg-%j.out.txt
 

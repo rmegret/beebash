@@ -19,7 +19,7 @@ videoname=videofile.split(".")[0]
 videodate=videoname.split("_")[-1]
 
 print(f"Converting video {videofile} and saving to {args.output}/videos/mp4/{videoname}.mp4")
-cmd = f"sbatch -J avi2mpg-{quote(videodate)} {BEE_PATH}/bin/slurm-avi2mpg.sh {quote(video)} -o {quote(args.output)}/videos/mp4/"
+cmd = f"sbatch -J avi2mpg-{quote(videodate)} -D {quote(args.output)}/logs {BEE_PATH}/bin/slurm-avi2mpg.sh {quote(video)} -o {quote(args.output)}/videos/mp4/"
 
 if args.dryrun:
 	# print("Dry run: Converting video {videofile} and saving to {args.output}/{videoname}.mp4"

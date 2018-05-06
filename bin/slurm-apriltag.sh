@@ -3,7 +3,6 @@
 #SBATCH --time=8:00:00
 #SBATCH --job-name=tags
 #SBATCH --mail-type=ALL
-#SBATCH --workdir=/work/rmegret/rmegret/tags
 #SBATCH --error=apriltag-%j.err.txt
 #SBATCH --output=apriltag-%j.out.txt
 #SBATCH --cpus-per-task=4

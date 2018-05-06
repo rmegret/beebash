@@ -23,7 +23,7 @@ video=os.path.realpath(args.video)
 videofile=video.split('/')[-1]
 videoname=videofile.split(".")[0]
 
-cmd = f"sbatch -J cleantags-{quote(videofile)} {BEE_PATH}/bin/slurm-cleantags.sh {quote(videoname)} {quote(args.output)} {quote(args.ids)} {args.hm} {quote(args.bx)}"
+cmd = f"sbatch -J cleantags-{quote(videofile)} -D {quote(args.output)}/logs {BEE_PATH}/bin/slurm-cleantags.sh {quote(videoname)} {quote(args.output)} {quote(args.ids)} {args.hm} {quote(args.bx)}"
 
 if args.dryrun:
         print(cmd)

@@ -3,7 +3,6 @@
 #SBATCH --time=2:00:00
 #SBATCH --job-name=mergetags
 #SBATCH --mail-type=ALL
-#SBATCH --workdir=/work/rmegret/rmegret/tags
 #SBATCH --error=mergetag-%j.err.txt
 #SBATCH --output=mergetag-%j.out.txt
 

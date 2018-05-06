@@ -3,7 +3,6 @@
 #SBATCH --time=0:20:00
 #SBATCH --job-name=cleantags
 #SBATCH --mail-type=ALL
-#SBATCH --workdir=/work/rmegret/rmegret/tags
 #SBATCH --error=cleantag-%j.err.txt
 #SBATCH --output=cleantag-%j.out.txt
 
