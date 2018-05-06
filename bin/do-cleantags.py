@@ -8,7 +8,7 @@ BEE_PATH = quote(os.environ['BEE_PATH'])
 p = ArgParser(default_config_files=[BEE_PATH+'config/cleantags.conf'])
 
 p.add('-n', '--dryrun', help='perform a trial run with no changes made', action='store_true')
-p.add('-o', '--output', help='path to output directory', env_var='BEE_PATH')
+p.add('-o', '--output', help='path to output directory', env_var='BEE_DATA')
 p.add('video', help='video to convert')
 p.add('--family', help='video family', default="tag25h5inv")
 p.add('--f0', help='frame start', type=int, default=0)
@@ -23,7 +23,7 @@ video=os.path.realpath(args.video)
 videofile=video.split('/')[-1]
 videoname=videofile.split(".")[0]
 
-cmd = f"sbatch -J cleantags-{quote(videofile)} {BEE_PATH}/bin/slurm-cleantags.sh {quote(videoname)} {quote(args.output)}/data {quote(args.ids)} {args.hm} {quote(args.bx)}"
+cmd = f"sbatch -J cleantags-{quote(videofile)} {BEE_PATH}/bin/slurm-cleantags.sh {quote(videoname)} {quote(args.output)} {quote(args.ids)} {args.hm} {quote(args.bx)}"
 
 if args.dryrun:
         print(cmd)

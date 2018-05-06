@@ -8,7 +8,7 @@ BEE_PATH = quote(os.environ['BEE_PATH'])
 p = ArgParser(default_config_files=[BEE_PATH+'config/apriltag.conf'])
 
 p.add('-n', '--dryrun', help='perform a trial run with no changes made', action='store_true')
-p.add('-o', '--output', help='path to output directory', env_var='BEE_PATH')
+p.add('-o', '--output', help='path to output directory', env_var='BEE_DATA')
 p.add('video', help='video to convert')
 p.add('--family', help='video family', default="tag25h5inv")
 p.add('--f0', help='frame start', type=int, default=0)
@@ -22,7 +22,7 @@ videofile=video.split('/')[-1]
 videoname=videofile.split(".")[0]
 videodate=videoname.split("_")[-1]
 
-cmd = f"sbatch -J {quote(args.family)}-{args.f0}-{args.f1}-{quote(videofile)} {BEE_PATH}/bin/slurm-apriltag.sh {quote(args.output)}/data/rawtags/{quote(videoname)} {quote(args.video)} {quote(args.family)} {args.f0} {args.f1} {args.fps}"
+cmd = f"sbatch -J {quote(args.family)}-{args.f0}-{args.f1}-{quote(videofile)} {BEE_PATH}/bin/slurm-apriltag.sh {quote(args.output)}/rawtags/{quote(videoname)} {quote(args.video)} {quote(args.family)} {args.f0} {args.f1} {args.fps}"
 
 if args.dryrun:
 	print(cmd)
